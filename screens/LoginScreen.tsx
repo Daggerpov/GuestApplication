@@ -10,7 +10,11 @@ export default class LoginScreen extends React.Component {
         errorMessage: null
     }
 
-    handleLogin = 
+    handleLogin = () => {
+        const {email, password} = this.state
+
+        firebase.auth().signInWithEmailAndPassword(email, password).catch(error => this.setState({ errorMessage: error.message }));
+    }
     
     render() {
         return (
@@ -46,7 +50,7 @@ export default class LoginScreen extends React.Component {
                     </View>
                 </View>
 
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onpress={this.handleLogin}>
                     <Text style={{color: "white", fontWeight: "500" }}>Login</Text>
                 </TouchableOpacity>
 
