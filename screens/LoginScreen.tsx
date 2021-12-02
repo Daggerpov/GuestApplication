@@ -1,8 +1,8 @@
 import React from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from "react-native";
-import * as firebase from 'firebase';
+//import * as firebase from 'firebase';
 
-
+/*
 export default class LoginScreen extends React.Component {
     state = {
         email: "",
@@ -65,6 +65,7 @@ export default class LoginScreen extends React.Component {
 
     }
 }
+*/
 
 const styles = StyleSheet.create({
     container: {
