@@ -15,7 +15,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import ModalScreen from '../screens/defaults/ModalScreen';
-import NotFoundScreen from '../screens/defaults/NotFoundScreen';
+import NotFoundScreen from "../screens/defaults/NotFoundScreen";
 // import TabOneScreen from '../screens/defaults/TabOneScreen';
 // import TabTwoScreen from '../screens/defaults/TabTwoScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
