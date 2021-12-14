@@ -74,3 +74,4 @@ dist/
 
 # @end expo-cli
 android/app/src/firebase/config.tsx
+secrets.ts
