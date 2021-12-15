@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "GuestApplication",
-    "slug": "GuestApplication",
+    "name": "guestapplication",
+    "slug": "guestapplication",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
