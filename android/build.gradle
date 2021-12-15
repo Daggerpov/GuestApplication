@@ -8,12 +8,14 @@ buildscript {
         targetSdkVersion = 30
     }
     repositories {
-        google()
+        google() //for Firebase, Google's Maven repository
         mavenCentral()
         jcenter()
     }
     dependencies {
         classpath("com.android.tools.build:gradle:4.1.0")
+
+        classpath 'com.google.gms:google-services:4.3.10' //added for Firebase
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -32,7 +34,7 @@ allprojects {
             url(new File(["node", "--print", "require.resolve('jsc-android/package.json')"].execute(null, rootDir).text.trim(), "../dist"))
         }
 
-        google()
+        google() //for Firebase, Google's Maven repository
         mavenCentral()
         jcenter()
         maven { url 'https://www.jitpack.io' }
