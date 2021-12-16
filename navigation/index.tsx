@@ -22,11 +22,22 @@ import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../typ
 import LinkingConfiguration from './LinkingConfiguration';
 
 import LoginScreen from '../screens/LoginScreen';
+import RegistrationScreen from '../screens/RegistrationScreen';
+import HomeScreen from "../screens/HomeScreen";
+
+
+// import { decode, encode } from "base-64";
+// if (!global.btoa) {
+//     global.btoa = encode;
+// }
+// if (!global.atob) {
+//     global.atob = decode;
+// }
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
     <NavigationContainer
-      linking={LinkingConfiguration}
+      //linking={LinkingConfiguration}
       theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <RootNavigator />
     </NavigationContainer>
@@ -40,9 +51,26 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
+  const [user, setUser] = React.useState(null);
+
   return (
+      // <Stack.Navigator>
+      //     <Stack.Screen name="Login" component={LoginScreen} />
+      // </Stack.Navigator>
       <Stack.Navigator>
-          <Stack.Screen name="Login" component={LoginScreen} />
+          {user ? (
+              <Stack.Screen name="Home">
+                  {(props) => <HomeScreen {...props} extraData={user} />}
+              </Stack.Screen>
+          ) : (
+              <>
+                  <Stack.Screen name="Login" component={LoginScreen} />
+                  <Stack.Screen
+                      name="Registration"
+                      component={RegistrationScreen}
+                  />
+              </>
+          )}
       </Stack.Navigator>
   );
 }
