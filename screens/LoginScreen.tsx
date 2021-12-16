@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { Image, Text, TextInput, TouchableOpacity, View, StyleSheet} from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
+import auth from '@react-native-firebase/auth';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+
 export default function LoginScreen({ navigation }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -10,7 +13,10 @@ export default function LoginScreen({ navigation }) {
         navigation.navigate("Registration");
     };
 
-    const onLoginPress = () => {};
+    const onLoginPress = () => {
+        
+        
+    };
 
     return (
         <View style={styles.container}>

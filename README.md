@@ -4,7 +4,7 @@
 
 # For whoever's taking over this project:
 
-Feel free to email me (via the contact in my GitHub profile) with questions. 
+Fork this repo, as well as, https://github.com/Daggerpov/GuestApplication and feel free to email me (via the contact in my GitHub profile) with questions.
 
 ## Development:
 
