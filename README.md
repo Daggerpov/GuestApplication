@@ -10,8 +10,7 @@ Feel free to email me (via the contact in my GitHub profile) with questions or i
 
 1. Install packages defined in package.json file using `yarn install`
 2. Ensure you've received the project's `secrets.ts` file and access to the email used for Firebase configuration.
-3. Follow whichever method under using the **React Native CLI** that you'd like in [the documentation](https://reactnative.dev/docs/environment-setup), depending on OS of your machine and emulator.
- 
+3. Follow whichever method under using the **React Native CLI** that you'd like in [the documentation](https://reactnative.dev/docs/environment-setup), depending on OS of your machine and emulator. I then developed using the `npx react-native run-{android/ios}` command. 
 
 ## Renaming:
 
