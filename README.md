@@ -4,15 +4,14 @@
 
 # For whoever's taking over this project:
 
-Feel free to email me (via the contact in my GitHub profile) with questions or if anything, such as this GitHub repo, needs to have its ownership transferred.
+Feel free to email me (via the contact in my GitHub profile) with questions. 
 
 ## Development:
 
 1. Install packages defined in package.json file using `yarn install`
-2. Ensure you've received the project's `secrets.ts` file and access to the email used for Firebase configuration.
-3. Follow whichever method under using the **React Native CLI** that you'd like in [the documentation](https://reactnative.dev/docs/environment-setup), depending on OS of your machine and emulator. I then developed using the `npx react-native run-{android/ios}` command. 
-
-Note that **Expo won't work** alongside the react-native-firebase module
+2. Ensure you've received the project's `secrets.ts` file and access to the email used for Firebase configuration and the Meta for Developers account (for FaceBook auth)
+3. Follow whichever method under using the **React Native CLI** that you'd like in [the documentation](https://reactnative.dev/docs/environment-setup), depending on OS of your machine and emulator. 
+4. Use the (or yarn ->)`npx react-native run-ios`(<- or android) command to run the code in development
 
 ## Renaming:
 
