@@ -6,6 +6,7 @@ import {
     TouchableOpacity,
     View,
     StyleSheet,
+    Button,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
@@ -42,7 +43,7 @@ export default function RegistrationScreen({ navigation }) {
             });
     };
 
-    const onFacebookPress = () => {
+    async function onFacebookButtonPress(){
         // Attempt login with permissions
         const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
 
@@ -62,8 +63,8 @@ export default function RegistrationScreen({ navigation }) {
 
         // Sign-in the user with the credential
         return auth().signInWithCredential(facebookCredential);
-}
-    };
+    }
+    
 
     return (
         <View style={styles.container}>
