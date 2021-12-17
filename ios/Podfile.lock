@@ -1,4 +1,9 @@
 PODS:
+  - AppAuth (1.4.0):
+    - AppAuth/Core (= 1.4.0)
+    - AppAuth/ExternalUserAgent (= 1.4.0)
+  - AppAuth/Core (1.4.0)
+  - AppAuth/ExternalUserAgent (1.4.0)
   - boost-for-react-native (1.63.0)
   - DoubleConversion (1.1.6)
   - EXApplication (4.0.0):
@@ -31,6 +36,8 @@ PODS:
   - EXUpdatesInterface (0.4.0)
   - EXWebBrowser (10.0.3):
     - ExpoModulesCore
+  - FBAEMKit (12.2.1):
+    - FBSDKCoreKit_Basics (= 12.2.1)
   - FBLazyVector (0.64.3)
   - FBReactNativeSpec (0.64.3):
     - RCT-Folly (= 2020.01.13.00)
@@ -39,6 +46,14 @@ PODS:
     - React-Core (= 0.64.3)
     - React-jsi (= 0.64.3)
     - ReactCommon/turbomodule/core (= 0.64.3)
+  - FBSDKCoreKit (12.2.1):
+    - FBAEMKit (= 12.2.1)
+    - FBSDKCoreKit_Basics (= 12.2.1)
+  - FBSDKCoreKit_Basics (12.2.1)
+  - FBSDKLoginKit (12.2.1):
+    - FBSDKCoreKit (= 12.2.1)
+  - FBSDKShareKit (12.2.1):
+    - FBSDKCoreKit (= 12.2.1)
   - Firebase/Auth (8.10.0):
     - Firebase/CoreOnly
     - FirebaseAuth (~> 8.10.0)
@@ -63,6 +78,10 @@ PODS:
     - GoogleUtilities/Environment (~> 7.2)
     - nanopb (~> 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleSignIn (6.0.2):
+    - AppAuth (~> 1.4)
+    - GTMAppAuth (~> 1.0)
+    - GTMSessionFetcher/Core (~> 1.1)
   - GoogleUtilities/AppDelegateSwizzler (7.6.0):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
@@ -78,6 +97,9 @@ PODS:
   - "GoogleUtilities/NSData+zlib (7.6.0)"
   - GoogleUtilities/Reachability (7.6.0):
     - GoogleUtilities/Logger
+  - GTMAppAuth (1.2.2):
+    - AppAuth/Core (~> 1.4)
+    - GTMSessionFetcher/Core (~> 1.5)
   - GTMSessionFetcher/Core (1.7.0)
   - nanopb (2.30908.0):
     - nanopb/decode (= 2.30908.0)
@@ -278,6 +300,20 @@ PODS:
     - React-jsi (= 0.64.3)
     - React-perflogger (= 0.64.3)
   - React-jsinspector (0.64.3)
+  - react-native-fbsdk-next (6.2.0):
+    - React-Core
+    - react-native-fbsdk-next/Core (= 6.2.0)
+    - react-native-fbsdk-next/Login (= 6.2.0)
+    - react-native-fbsdk-next/Share (= 6.2.0)
+  - react-native-fbsdk-next/Core (6.2.0):
+    - FBSDKCoreKit (~> 12.2.1)
+    - React-Core
+  - react-native-fbsdk-next/Login (6.2.0):
+    - FBSDKLoginKit (~> 12.2.1)
+    - React-Core
+  - react-native-fbsdk-next/Share (6.2.0):
+    - FBSDKShareKit (~> 12.2.1)
+    - React-Core
   - react-native-safe-area-context (3.3.2):
     - React-Core
   - React-perflogger (0.64.3)
@@ -353,6 +389,9 @@ PODS:
     - RNFBApp
   - RNGestureHandler (1.10.3):
     - React-Core
+  - RNGoogleSignin (7.0.1):
+    - GoogleSignIn (~> 6.0.0)
+    - React-Core
   - RNReanimated (2.2.4):
     - DoubleConversion
     - FBLazyVector
@@ -419,6 +458,7 @@ DEPENDENCIES:
   - React-jsi (from `../node_modules/react-native/ReactCommon/jsi`)
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
+  - react-native-fbsdk-next (from `../node_modules/react-native-fbsdk-next`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
@@ -435,19 +475,28 @@ DEPENDENCIES:
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - "RNGoogleSignin (from `../node_modules/@react-native-google-signin/google-signin`)"
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
   trunk:
+    - AppAuth
     - boost-for-react-native
+    - FBAEMKit
+    - FBSDKCoreKit
+    - FBSDKCoreKit_Basics
+    - FBSDKLoginKit
+    - FBSDKShareKit
     - Firebase
     - FirebaseAuth
     - FirebaseCore
     - FirebaseCoreDiagnostics
     - GoogleDataTransport
+    - GoogleSignIn
     - GoogleUtilities
+    - GTMAppAuth
     - GTMSessionFetcher
     - nanopb
     - PromisesObjC
@@ -511,6 +560,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsiexecutor"
   React-jsinspector:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
+  react-native-fbsdk-next:
+    :path: "../node_modules/react-native-fbsdk-next"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   React-perflogger:
@@ -543,6 +594,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/auth"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
+  RNGoogleSignin:
+    :path: "../node_modules/@react-native-google-signin/google-signin"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
@@ -551,6 +604,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
+  AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
   EXApplication: 0e15240e4d125b62f1cae48759ffbbd32b9286a6
@@ -567,15 +621,22 @@ SPEC CHECKSUMS:
   EXUpdates: 061b67c33f0e7f8fd335bbb48697c4a4fc8a5157
   EXUpdatesInterface: e1c01b4f5ec76bd1d6cc714938f9edf5ef6379b9
   EXWebBrowser: ecb70d9e6edb279d9b10b2bbc9ad4320fcdc4060
+  FBAEMKit: 4cea610d0bc1680572f2aad7b25db7a2f2690d82
   FBLazyVector: c71c5917ec0ad2de41d5d06a5855f6d5eda06971
   FBReactNativeSpec: 4c43970c4a132e982a7a13e53aa07e18097784a6
+  FBSDKCoreKit: 5b1992fe65802ca26be7e68bc4fac5f59fa39908
+  FBSDKCoreKit_Basics: a6a92ca628e05f86f458a4721574c5ddfb058ba3
+  FBSDKLoginKit: 7467b7f988ca4fdf48f12a839bcfce4264752429
+  FBSDKShareKit: 25fe0e2cd0811918e5b5b1603cb3fc580154cc48
   Firebase: 44213362f1dcc52555b935dc925ed35ac55f1b20
   FirebaseAuth: 59a2d2b933b5b79e18fb1e6ad230c6abdaa73d26
   FirebaseCore: 04186597c095da37d90ff9fd3e53bc61a1ff2440
   FirebaseCoreDiagnostics: 56fb7216d87e0e6ec2feddefa9d8a392fe8b2c18
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
   GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940
+  GoogleSignIn: fd381840dbe7c1137aa6dc30849a5c3e070c034a
   GoogleUtilities: 684ee790a24f73ebb2d1d966e9711c203f2a4237
+  GTMAppAuth: ad5c2b70b9a8689e1a04033c9369c4915bfcbe89
   GTMSessionFetcher: 43748f93435c2aa068b1cbe39655aaf600652e91
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
@@ -590,6 +651,7 @@ SPEC CHECKSUMS:
   React-jsi: a8b09c29521c798f1783348b37b511ba7b3dbeb3
   React-jsiexecutor: df6abc9fafbecb8e5b7a5fbc5e6d4bd017d594d5
   React-jsinspector: 34e23860273a23695342f58eed3ffd3ba10c31e0
+  react-native-fbsdk-next: 3a9545d174f16ec343e7bcaf12f970fdc82feed2
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   React-perflogger: cc76a4254d19640f1d8ad1c66fdee800414b805c
   React-RCTActionSheet: 7448f049318d8d7e8a9a1ebb742ada721757eea8
@@ -606,6 +668,7 @@ SPEC CHECKSUMS:
   RNFBApp: b6eef98aff9bfb2f7c135efee640215f72d718ab
   RNFBAuth: d6f91ae9dc4330014b90a87ea97910b5dc5adaaf
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
+  RNGoogleSignin: a51c9c7419262c75748ddcee3f735bb42da5def1
   RNReanimated: 024eff8202342abf4b24e11575a16afc441dabfe
   RNScreens: 6e1ea5787989f92b0671049b808aef64fa1ef98c
   Yoga: e6ecf3fa25af9d4c87e94ad7d5d292eedef49749

@@ -1,8 +1,17 @@
 import React, { useState } from "react";
-import { Image, Text, TextInput, TouchableOpacity, View, StyleSheet } from "react-native";
+import {
+    Image,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
+    StyleSheet,
+} from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-import auth from '@react-native-firebase/auth';
+import auth from "@react-native-firebase/auth";
+import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
+
 
 export default function RegistrationScreen({ navigation }) {
     const [fullName, setFullName] = useState("");
@@ -16,10 +25,7 @@ export default function RegistrationScreen({ navigation }) {
 
     const onRegisterPress = () => {
         auth()
-            .createUserWithEmailAndPassword(
-                email,
-                password
-            )
+            .createUserWithEmailAndPassword(email, password)
             .then(() => {
                 console.log("User account created & signed in!");
             })
@@ -34,30 +40,29 @@ export default function RegistrationScreen({ navigation }) {
 
                 console.error(error);
             });
-        // firebase
-        //     .auth()
-        //     .signInWithEmailAndPassword(email, password)
-        //     .then((response) => {
-        //         const uid = response.user.uid;
-        //         const usersRef = firebase.firestore().collection("users");
-        //         usersRef
-        //             .doc(uid)
-        //             .get()
-        //             .then((firestoreDocument) => {
-        //                 if (!firestoreDocument.exists) {
-        //                     alert("User does not exist anymore.");
-        //                     return;
-        //                 }
-        //                 const user = firestoreDocument.data();
-        //                 navigation.navigate("Home", { user });
-        //             })
-        //             .catch((error) => {
-        //                 alert(error);
-        //             });
-        //     })
-        //     .catch((error) => {
-        //         alert(error);
-        //     });
+    };
+
+    const onFacebookPress = () => {
+        // Attempt login with permissions
+        const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
+
+        if (result.isCancelled) {
+            throw 'User cancelled the login process';
+        }
+
+        // Once signed in, get the users AccesToken
+        const data = await AccessToken.getCurrentAccessToken();
+
+        if (!data) {
+            throw 'Something went wrong obtaining access token';
+        }
+
+        // Create a Firebase credential with the AccessToken
+        const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
+
+        // Sign-in the user with the credential
+        return auth().signInWithCredential(facebookCredential);
+}
     };
 
     return (
@@ -126,6 +131,14 @@ export default function RegistrationScreen({ navigation }) {
                     </Text>
                 </View>
             </KeyboardAwareScrollView>
+            <Button
+                title="Facebook Sign-In"
+                onPress={() =>
+                    onFacebookButtonPress().then(() =>
+                        console.log("Signed in with Facebook!")
+                    )
+                }
+            />
         </View>
     );
 }

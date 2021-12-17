@@ -6212,6 +6212,11 @@ react-native-codegen@^0.0.6:
     jscodeshift "^0.11.0"
     nullthrows "^1.1.1"
 
+react-native-fbsdk-next@^6.2.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-fbsdk-next/-/react-native-fbsdk-next-6.2.0.tgz#912d79d327bfdcd79b3d31a210051fa6b8ce911d"
+  integrity sha512-5FYiAg7rfLxJmH9XLe33c4050qI04nJGtUclWbG0xCViZBk7wBWE7ip07zRsNl0Aa02EqFd6G7o9Fk9DmXVGTw==
+
 react-native-gesture-handler@~1.10.2:
   version "1.10.3"
   resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-1.10.3.tgz#942bbf2963bbf49fa79593600ee9d7b5dab3cfc0"
