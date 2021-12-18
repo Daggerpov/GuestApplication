@@ -1,9 +1,24 @@
 import React, { useState } from "react";
-import { Image, Text, TextInput, TouchableOpacity, View, StyleSheet} from "react-native";
+import {
+    Image,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
+    StyleSheet,
+    Button,
+} from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-import auth from '@react-native-firebase/auth';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import auth from "@react-native-firebase/auth";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import { LoginManager, AccessToken } from "react-native-fbsdk-next"; //Facebook
+
+import secrets from '../secrets';
+
+GoogleSignin.configure({
+    webClientId: secrets.google_client_id,
+});
 
 export default function LoginScreen({ navigation }) {
     const [email, setEmail] = useState("");
@@ -13,13 +28,64 @@ export default function LoginScreen({ navigation }) {
         navigation.navigate("Registration");
     };
 
-    const onLoginPress = () => {
-        
-        
-    };
+    async function onFacebookButtonPress() {
+        // Attempt login with permissions
+        const result = await LoginManager.logInWithPermissions([
+            "public_profile",
+            "email",
+        ]);
+
+        if (result.isCancelled) {
+            throw "User cancelled the login process";
+        }
+
+        // Once signed in, get the users AccesToken
+        const data = await AccessToken.getCurrentAccessToken();
+
+        if (!data) {
+            throw "Something went wrong obtaining access token";
+        }
+
+        // Create a Firebase credential with the AccessToken
+        const facebookCredential = auth.FacebookAuthProvider.credential(
+            data.accessToken
+        );
+
+        // Sign-in the user with the credential
+        return auth().signInWithCredential(facebookCredential);
+    }
+
+    async function onGoogleButtonPress() {
+        // Get the users ID token
+        const { idToken } = await GoogleSignin.signIn();
+
+        // Create a Google credential with the token
+        const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+
+        // Sign-in the user with the credential
+        return auth().signInWithCredential(googleCredential);
+    }
+
+    const onLoginPress = () => {};
 
     return (
         <View style={styles.container}>
+            <Button
+                title="Connect with Facebook"
+                onPress={() =>
+                    onFacebookButtonPress().then(() =>
+                        console.log("Signed in with Facebook!")
+                    )
+                }
+            />
+            <Button
+                title="Connect with Google"
+                onPress={() =>
+                    onGoogleButtonPress().then(() =>
+                        console.log("Signed in with Google!")
+                    )
+                }
+            />
             <KeyboardAwareScrollView
                 style={{ flex: 1, width: "100%" }}
                 keyboardShouldPersistTaps="always"
@@ -82,65 +148,62 @@ export default function LoginScreen({ navigation }) {
 //     }
 // }
 
-
 // import React from "react";
 // import { View, Text, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center'
+        alignItems: "center",
     },
-    title: {
-
-    },
+    title: {},
     logo: {
         flex: 1,
         height: 120,
         width: 90,
         alignSelf: "center",
-        margin: 30
+        margin: 30,
     },
     input: {
         height: 48,
         borderRadius: 5,
-        overflow: 'hidden',
-        backgroundColor: 'white',
+        overflow: "hidden",
+        backgroundColor: "white",
         marginTop: 10,
         marginBottom: 10,
         marginLeft: 30,
         marginRight: 30,
-        paddingLeft: 16
+        paddingLeft: 16,
     },
     button: {
-        backgroundColor: '#788eec',
+        backgroundColor: "#788eec",
         marginLeft: 30,
         marginRight: 30,
         marginTop: 20,
         height: 48,
         borderRadius: 5,
         alignItems: "center",
-        justifyContent: 'center'
+        justifyContent: "center",
     },
     buttonTitle: {
-        color: 'white',
+        color: "white",
         fontSize: 16,
-        fontWeight: "bold"
+        fontWeight: "bold",
     },
     footerView: {
         flex: 1,
         alignItems: "center",
-        marginTop: 20
+        marginTop: 20,
     },
     footerText: {
         fontSize: 16,
-        color: '#2e2e2d'
+        color: "#2e2e2d",
     },
     footerLink: {
         color: "#788eec",
         fontWeight: "bold",
-        fontSize: 16
-    }
+        fontSize: 16,
+    },
 });
 
 // export default class LoginScreen extends React.Component {
