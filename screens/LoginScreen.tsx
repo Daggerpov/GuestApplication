@@ -66,7 +66,7 @@ export default function LoginScreen({ navigation }) {
         return auth().signInWithCredential(googleCredential);
     }
 
-    const onLoginPress = () => {};
+    const onLoginPress = () => {navigation.navigate("Home")};
 
     return (
         <View style={styles.container}>
@@ -74,7 +74,8 @@ export default function LoginScreen({ navigation }) {
                 title="Connect with Facebook"
                 onPress={() =>
                     onFacebookButtonPress().then(() =>
-                        console.log("Signed in with Facebook!")
+                        // console.log("Signed in with Facebook!");
+                        navigation.navigate("Home")
                     )
                 }
             />
@@ -82,10 +83,16 @@ export default function LoginScreen({ navigation }) {
                 title="Connect with Google"
                 onPress={() =>
                     onGoogleButtonPress().then(() =>
-                        console.log("Signed in with Google!")
+                        // console.log("Signed in with Google!")
+                        navigation.navigate("Home")
                     )
                 }
             />
+            <Button
+                title="Phone Number Sign In"
+                onPress={() => navigation.navigate("PhoneCodeConfirmation")}
+            />
+
             <KeyboardAwareScrollView
                 style={{ flex: 1, width: "100%" }}
                 keyboardShouldPersistTaps="always"

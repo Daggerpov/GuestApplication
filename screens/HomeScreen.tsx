@@ -1,11 +1,21 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Button } from "react-native";
+import auth from '@react-native-firebase/auth';
+
 
 export default class HomeScreen extends React.Component {
     render() {
         return (
             <View style={styles.container}>
                 <Text>Home Screen</Text>
+                <Button
+                    title="Logout"
+                    onPress={() =>
+                        auth()
+                            .signOut()
+                            .then(() => console.log("User signed out!"))
+                    }
+                />
             </View>
         );
     }

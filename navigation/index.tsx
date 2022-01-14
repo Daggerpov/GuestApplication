@@ -8,7 +8,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
-import { ColorSchemeName, Pressable } from 'react-native';
+import { ColorSchemeName, Pressable} from 'react-native';
 
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
@@ -21,10 +21,12 @@ import NotFoundScreen from "../screens/defaults/NotFoundScreen";
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 
+import auth from "@react-native-firebase/auth";
+
 import LoginScreen from '../screens/LoginScreen';
 import RegistrationScreen from '../screens/RegistrationScreen';
 import HomeScreen from "../screens/HomeScreen";
-
+import PhoneCodeConfirmationScreen from '../screens/PhoneConfirm';
 
 // import { decode, encode } from "base-64";
 // if (!global.btoa) {
@@ -51,28 +53,47 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
-  const [user, setUser] = React.useState(null);
+    // Set an initializing state whilst Firebase connects
+    const [initializing, setInitializing] = React.useState(true);
+    const [user, setUser] = React.useState(null);
 
-  return (
-      // <Stack.Navigator>
-      //     <Stack.Screen name="Login" component={LoginScreen} />
-      // </Stack.Navigator>
-      <Stack.Navigator>
-          {user ? (
-              <Stack.Screen name="Home">
-                  {(props) => <HomeScreen {...props} extraData={user} />}
-              </Stack.Screen>
-          ) : (
-              <>
-                  <Stack.Screen name="Login" component={LoginScreen} />
-                  <Stack.Screen
-                      name="Registration"
-                      component={RegistrationScreen}
-                  />
-              </>
-          )}
-      </Stack.Navigator>
-  );
+    // Handle user state changes
+    function onAuthStateChanged(user) {
+        setUser(user);
+        if (initializing) setInitializing(false);
+    }
+
+    React.useEffect(() => {
+        const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+        return subscriber; // unsubscribe on unmount
+    }, []);
+
+    if (initializing) return null;
+
+    return (
+        // <Stack.Navigator>
+        //     <Stack.Screen name="Login" component={LoginScreen} />
+        // </Stack.Navigator>
+        <Stack.Navigator>
+            {user ? (
+                <Stack.Screen name="Home">
+                    {(props) => <HomeScreen {...props} extraData={user} />}
+                </Stack.Screen>
+            ) : (
+                <>
+                    <Stack.Screen name="Login" component={LoginScreen} />
+                    <Stack.Screen
+                        name="Registration"
+                        component={RegistrationScreen}
+                    />
+                    <Stack.Screen
+                        name="PhoneCodeConfirmation"
+                        component={PhoneCodeConfirmationScreen}
+                    />
+                </>
+            )}
+        </Stack.Navigator>
+    );
 }
 {
     /* { <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />

@@ -20,6 +20,7 @@ export type RootStackParamList = {
   Home: undefined;
   Login: undefined;
   Registration: undefined;
+  PhoneCodeConfirmation: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
