@@ -18,6 +18,8 @@ export default function PhoneConfirmationScreen() {
 
     const [code, setCode] = useState("");
 
+    const [phoneNumber, setPhoneNumber] = useState("");
+
     // Handle the button press
     async function signInWithPhoneNumber(phoneNumber) {
         const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
@@ -35,10 +37,16 @@ export default function PhoneConfirmationScreen() {
 
     if (!confirm) {
         return (
-            <Button
-                title="Phone Number Sign In"
-                onPress={() => signInWithPhoneNumber("+1 613-255-2821")}    
-            />
+            <>
+                <TextInput
+                    value={code}
+                    onChangeText={(phoneNumber) => setCode(phoneNumber)}
+                />
+                <Button
+                    title="Send Code"
+                    onPress={() => signInWithPhoneNumber(phoneNumber)}
+                />
+            </>
         );
     }
 
