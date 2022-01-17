@@ -25,3 +25,7 @@ Fork this repo, as well as, https://github.com/Daggerpov/GuestApplication and fe
     <li>Use the Better Comments Visual Studio Code extension to see marked ones</li>
     <li>Using the Expo development environment will not work with the react-native-firebase module.</li>
 </ul>
+
+### TO-DO:
+
+- since I didn't have an apple paid developer account, when trying to enable push notifications through the method in [this link](https://developers.sap.com/tutorials/fiori-ios-hcpms-push-notifications.html), but it didn't pop up, most likely since I don't have a paid developer account. This impacts the Phone Sign-In screen, since I need to follow the instruction of [this Github answer](https://github.com/invertase/react-native-firebase/issues/557#issuecomment-340404720), which I'm not able to do due to this absence. 
