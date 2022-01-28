@@ -39,8 +39,8 @@ export default function PhoneConfirmationScreen() {
         return (
             <>
                 <TextInput
-                    value={code}
-                    onChangeText={(phoneNumber) => setCode(phoneNumber)}
+                    value={phoneNumber}
+                    onChangeText={(text) => setPhoneNumber(text)}
                 />
                 <Button
                     title="Send Code"
