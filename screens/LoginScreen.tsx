@@ -7,8 +7,12 @@ import {
     View,
     StyleSheet,
     Button,
+    Pressable,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+
+import { useTogglePasswordVisibility } from "../hooks/useTogglePasswordVisibility"; //custom hook
+import { MaterialCommunityIcons } from "@expo/vector-icons"; //used for show password icon
 
 import auth from "@react-native-firebase/auth";
 import { GoogleSignin, GoogleSigninButton } from "@react-native-google-signin/google-signin";
@@ -16,14 +20,16 @@ import {
     LoginManager,
     AccessToken,
 } from "react-native-fbsdk-next"; //Facebook
-
-import secrets from '../secrets';
+import secrets from "../secrets";
 
 GoogleSignin.configure({
     webClientId: secrets.google_client_id,
 });
 
 export default function LoginScreen({ navigation }) {
+    const { passwordVisibility, rightIcon, handlePasswordVisibility } =
+        useTogglePasswordVisibility();
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -87,7 +93,7 @@ export default function LoginScreen({ navigation }) {
     return (
         <View style={styles.container}>
             <TouchableOpacity
-                style={styles.buttonFacebookStyle}
+                style={[styles.buttonFacebookStyle, styles.evenWidth]}
                 activeOpacity={0.5}
                 onPress={() =>
                     onFacebookButtonPress().then(() =>
@@ -103,24 +109,27 @@ export default function LoginScreen({ navigation }) {
                     style={styles.buttonImageIconStyle}
                 />
                 <View style={styles.buttonIconSeparatorStyle} />
-                <Text style={styles.buttonTextStyle}>Login Using Facebook</Text>
+                <Text style={styles.buttonTextStyle}>
+                    Sign in Using Facebook
+                </Text>
             </TouchableOpacity>
 
             <GoogleSigninButton
-                style={{ width: 192, height: 48 }}
+                style={{ width: 200 * 1.04, height: 48 * 1.04, marginTop: 10 }}
                 size={GoogleSigninButton.Size.Wide}
                 color={GoogleSigninButton.Color.Dark}
                 onPress={() =>
                     onGoogleButtonPress().then(() =>
-                        // console.log("Signed in with Google!")
                         navigation.navigate("Home")
                     )
                 }
             />
-            <Button
-                title="Phone Number Sign In"
+            <TouchableOpacity
+                style={[styles.button, styles.evenWidth]}
                 onPress={() => navigation.navigate("PhoneCodeConfirmation")}
-            />
+            >
+                <Text style={styles.buttonTitle}>Phone Number Sign in</Text>
+            </TouchableOpacity>
 
             <KeyboardAwareScrollView
                 style={{ flex: 1, width: "100%" }}
@@ -138,17 +147,30 @@ export default function LoginScreen({ navigation }) {
                     value={email}
                     underlineColorAndroid="transparent"
                     autoCapitalize="none"
+                    autoCorrect={false}
                 />
-                <TextInput
-                    style={styles.input}
-                    placeholderTextColor="#aaaaaa"
-                    secureTextEntry
-                    placeholder="Password"
-                    onChangeText={(text) => setPassword(text)}
-                    value={password}
-                    underlineColorAndroid="transparent"
-                    autoCapitalize="none"
-                />
+                <View style={[styles.inputContainer, styles.input]}>
+                    <TextInput
+                        style={styles.inputField}
+                        placeholderTextColor="#aaaaaa"
+                        secureTextEntry={passwordVisibility}
+                        placeholder="Password"
+                        onChangeText={(text) => setPassword(text)}
+                        value={password}
+                        underlineColorAndroid="transparent"
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                    />
+                    <Pressable
+                        onPress={handlePasswordVisibility}
+                    >
+                        <MaterialCommunityIcons
+                            name={rightIcon}
+                            size={22}
+                            color="#232323"
+                        />
+                    </Pressable>
+                </View>
                 <TouchableOpacity
                     style={styles.button}
                     onPress={() => onLoginPress()}
@@ -178,11 +200,10 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: "center",
     },
-    title: {},
     logo: {
         flex: 1,
-        height: 120,
-        width: 90,
+        height: 120 * 0.8,
+        width: 90 * 0.8,
         alignSelf: "center",
         margin: 30,
     },
@@ -197,6 +218,14 @@ const styles = StyleSheet.create({
         marginRight: 30,
         paddingLeft: 16,
     },
+    inputContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+    },
+    inputField: {
+        width: "90%",
+        backgroundColor: "white",
+    },
     button: {
         backgroundColor: "#788eec",
         marginLeft: 30,
@@ -206,6 +235,9 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         alignItems: "center",
         justifyContent: "center",
+    },
+    evenWidth: {
+        width: 200,
     },
     buttonTitle: {
         color: "white",
@@ -232,9 +264,9 @@ const styles = StyleSheet.create({
         backgroundColor: "#485a96",
         borderWidth: 0.5,
         borderColor: "#fff",
-        height: 40,
         borderRadius: 5,
         margin: 5,
+        height: 48,
     },
     buttonImageIconStyle: {
         padding: 10,

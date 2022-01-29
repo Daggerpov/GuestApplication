@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
     Image,
     Text,
@@ -12,6 +12,8 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 
 import auth from "@react-native-firebase/auth";
 
+import PhoneInput from "react-native-phone-number-input";
+
 export default function PhoneConfirmationScreen() {
     // If null, no SMS has been sent
     const [confirm, setConfirm] = useState(null);
@@ -19,6 +21,8 @@ export default function PhoneConfirmationScreen() {
     const [code, setCode] = useState("");
 
     const [phoneNumber, setPhoneNumber] = useState("");
+
+    const phoneInput = useRef(null); // react tag, using as reference of country code picker
 
     // Handle the button press
     async function signInWithPhoneNumber(phoneNumber) {
@@ -29,7 +33,6 @@ export default function PhoneConfirmationScreen() {
     async function confirmCode() {
         try {
             await confirm.confirm(code);
-            console.log(code);
         } catch (error) {
             console.log("Invalid code.", error);
         }
@@ -37,22 +40,63 @@ export default function PhoneConfirmationScreen() {
 
     if (!confirm) {
         return (
-            <>
-                <TextInput
-                    value={phoneNumber}
-                    onChangeText={(text) => setPhoneNumber(text)}
+            <View style={styles.MainContainer}>
+                <Text style={styles.heading}>
+                    {" "}
+                    Enter Your Phone Number:{" "}
+                </Text>
+                <PhoneInput
+                    ref={phoneInput}
+                    defaultValue={phoneNumber}
+                    defaultCode="CA"
+                    layout="first"
+                    withShadow
+                    autoFocus
+                    containerStyle={styles.phoneNumberView}
+                    textContainerStyle={{ paddingVertical: 0 }}
+                    onChangeFormattedText={(text) => {
+                        setPhoneNumber(text);
+                    }}
                 />
+
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => signInWithPhoneNumber(phoneNumber)}
+                >
+                    <Text style={styles.buttonText}>Send Code</Text>
+                </TouchableOpacity>
+            </View>
+        );
+                {/* <TextInput
+                    style={styles.input}
+                    placeholderTextColor="#aaaaaa"
+                    placeholder="Phone Number"
+                    onChangeText={(text) => setPhoneNumber(text)}
+                    value={phoneNumber}
+                    underlineColorAndroid="transparent"
+                    autoCapitalize="none"
+                    keyboardType="numeric"
+                /> 
                 <Button
                     title="Send Code"
                     onPress={() => signInWithPhoneNumber(phoneNumber)}
                 />
-            </>
-        );
+            </>*/}
+        
     }
 
     return (
         <>
-            <TextInput value={code} onChangeText={(text) => setCode(text)} />
+            <TextInput
+                style={styles.input}
+                placeholderTextColor="#aaaaaa"
+                placeholder="Enter Confirmation Code"
+                onChangeText={(text) => setCode(text)}
+                value={code}
+                underlineColorAndroid="transparent"
+                autoCapitalize="none"
+                keyboardType="numeric"
+            />
             <Button title="Confirm Code" onPress={() => confirmCode()} />
         </>
     );
@@ -82,16 +126,16 @@ const styles = StyleSheet.create({
         marginRight: 30,
         paddingLeft: 16,
     },
-    button: {
-        backgroundColor: "#788eec",
-        marginLeft: 30,
-        marginRight: 30,
-        marginTop: 20,
-        height: 48,
-        borderRadius: 5,
-        alignItems: "center",
-        justifyContent: "center",
-    },
+    // button: {
+    //     backgroundColor: "#788eec",
+    //     marginLeft: 30,
+    //     marginRight: 30,
+    //     marginTop: 20,
+    //     height: 48,
+    //     borderRadius: 5,
+    //     alignItems: "center",
+    //     justifyContent: "center",
+    // },
     buttonTitle: {
         color: "white",
         fontSize: 16,
@@ -110,5 +154,38 @@ const styles = StyleSheet.create({
         color: "#788eec",
         fontWeight: "bold",
         fontSize: 16,
+    },
+    MainContainer: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+
+    heading: {
+        fontSize: 24,
+        textAlign: "center",
+        paddingBottom: 20,
+        color: "black",
+    },
+
+    phoneNumberView: {
+        width: "80%",
+        height: 50,
+        backgroundColor: "white",
+    },
+
+    button: {
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 25,
+        width: "80%",
+        padding: 8,
+        backgroundColor: "#788eec",
+    },
+
+    buttonText: {
+        fontSize: 16,
+        textAlign: "center",
+        color: "white",
     },
 });

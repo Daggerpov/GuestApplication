@@ -107,6 +107,7 @@ export default function RegistrationScreen({ navigation }) {
                     value={fullName}
                     underlineColorAndroid="transparent"
                     autoCapitalize="none"
+                    autoCorrect={false}
                 />
                 {fullNameError.length > 0 && <Text>{fullNameError}</Text>}
                 <TextInput
@@ -117,6 +118,7 @@ export default function RegistrationScreen({ navigation }) {
                     value={email}
                     underlineColorAndroid="transparent"
                     autoCapitalize="none"
+                    autoCorrect={false}
                 />
                 {emailError.length > 0 && <Text>{emailError}</Text>}
                 <TextInput
@@ -128,6 +130,7 @@ export default function RegistrationScreen({ navigation }) {
                     value={password}
                     underlineColorAndroid="transparent"
                     autoCapitalize="none"
+                    autoCorrect={false}
                 />
                 {passwordError.length > 0 && <Text>{passwordError}</Text>}
                 <TextInput
@@ -139,6 +142,7 @@ export default function RegistrationScreen({ navigation }) {
                     value={confirmPassword}
                     underlineColorAndroid="transparent"
                     autoCapitalize="none"
+                    autoCorrect={false}
                 />
                 {confirmPasswordError.length > 0 && (
                     <Text>{confirmPasswordError}</Text>
