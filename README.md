@@ -2,6 +2,16 @@
 
 [Market Research Report](https://docs.google.com/document/d/1xZdxptCEs5-hoUvDSlnbW_CbBmywLKR8Z1Ls86qBWK0/edit?usp=sharing) (written prior to development)
 
+![image](https://user-images.githubusercontent.com/53918934/151661064-920a1222-1c1b-4c73-922d-5786fa92f556.png)
+
+![image](https://user-images.githubusercontent.com/53918934/151661591-1bb31364-a8e4-4f85-9811-832dbbdd124c.png)
+
+![image](https://user-images.githubusercontent.com/53918934/151661692-caa418fe-4184-4b4b-9ebe-47c4f512fc58.png)
+
+![image](https://user-images.githubusercontent.com/53918934/151661051-b03bfc31-ef38-4b52-876a-8d90e9defddd.png)
+
+
+
 # For whoever's taking over this project:
 
 Fork this repo, as well as, https://github.com/Daggerpov/GuestApplication and feel free to email me (via the contact in my GitHub profile) with questions.
