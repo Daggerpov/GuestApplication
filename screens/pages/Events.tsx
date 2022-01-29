@@ -7,23 +7,13 @@ import {
     TouchableOpacity,
     Image,
 } from "react-native";
-import auth from '@react-native-firebase/auth';
+import auth from "@react-native-firebase/auth";
 
 import "react-native-gesture-handler";
 
-export default function HomeScreen ({ navigation }){
+export default function EventsPage({ navigation }) {
     return (
         <View style={styles.container}>
-            <Text>Home Screen</Text>
-            <Button
-
-                title="Logout"
-                onPress={() =>
-                    auth()
-                        .signOut()
-                        .then(() => console.log("User signed out!"))
-                }
-            />
         </View>
     );
 }
@@ -31,7 +21,7 @@ export default function HomeScreen ({ navigation }){
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: "flex-end",
+        alignItems: "center",
     },
     input: {
         height: 48,

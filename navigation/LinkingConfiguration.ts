@@ -9,6 +9,8 @@ import * as Linking from 'expo-linking';
 
 import { RootStackParamList } from '../types';
 
+// this file isn't currently being used
+
 const linking: LinkingOptions<RootStackParamList> = {
   prefixes: [Linking.makeUrl('/')],
   config: {

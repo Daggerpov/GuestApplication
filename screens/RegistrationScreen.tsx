@@ -7,12 +7,20 @@ import {
     View,
     StyleSheet,
     Button,
+    Pressable,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+
+import { useTogglePasswordVisibility } from "../hooks/useTogglePasswordVisibility"; //custom hook
+import { MaterialCommunityIcons } from "@expo/vector-icons"; //used for show password icon
 
 import auth from "@react-native-firebase/auth";
 
 export default function RegistrationScreen({ navigation }) {
+    const { passwordVisibility, rightIcon, handlePasswordVisibility } =
+        useTogglePasswordVisibility();
+    
+
     const [fullName, setFullName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -30,7 +38,12 @@ export default function RegistrationScreen({ navigation }) {
 
     const onRegisterPress = () => {
         let fullNameValid = false;
-        if (fullName.length <= 3) {
+        
+        let specialCharacters = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+
+        if (specialCharacters.test(fullName)){
+            setFullNameError("Special characters are not allowed");
+        } else if (fullName.length <= 3) {
             setFullNameError("Full Name must be greater than 3 characters");
         } else {
             setFullNameError("");
@@ -38,15 +51,21 @@ export default function RegistrationScreen({ navigation }) {
         }
         
         let emailValid = false;
+
+        let emailValidationRegularExpression =
+              /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
         if (email.length == 0) {
             setEmailError("Email is required");
         } else if (email.length < 6) {
             setEmailError("Email should be minimum 6 characters");
         } else if (email.indexOf(" ") >= 0) {
             setEmailError("Email cannot contain spaces");
-        } else {
+        } else if (String(email).toLowerCase().match(emailValidationRegularExpression)) {
             setEmailError("");
             emailValid = true;
+        } else {
+            setEmailError("Email is invalid");
         }
 
         let passwordValid = false;
@@ -69,7 +88,7 @@ export default function RegistrationScreen({ navigation }) {
             passwordConfirmValid = true;
         }      
 
-        if (emailValid && passwordValid && passwordConfirmValid){
+        if (fullNameValid && emailValid && passwordValid && passwordConfirmValid){
             auth()
                 .createUserWithEmailAndPassword(email, password)
                 .then(() => {
@@ -109,7 +128,9 @@ export default function RegistrationScreen({ navigation }) {
                     autoCapitalize="none"
                     autoCorrect={false}
                 />
-                {fullNameError.length > 0 && <Text>{fullNameError}</Text>}
+                {fullNameError.length > 0 && (
+                    <Text style={styles.formError}>{fullNameError}</Text>
+                )}
                 <TextInput
                     style={styles.input}
                     placeholder="E-mail"
@@ -120,32 +141,54 @@ export default function RegistrationScreen({ navigation }) {
                     autoCapitalize="none"
                     autoCorrect={false}
                 />
-                {emailError.length > 0 && <Text>{emailError}</Text>}
-                <TextInput
-                    style={styles.input}
-                    placeholderTextColor="#aaaaaa"
-                    secureTextEntry
-                    placeholder="Password"
-                    onChangeText={(text) => setPassword(text)}
-                    value={password}
-                    underlineColorAndroid="transparent"
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                />
-                {passwordError.length > 0 && <Text>{passwordError}</Text>}
-                <TextInput
-                    style={styles.input}
-                    placeholderTextColor="#aaaaaa"
-                    secureTextEntry
-                    placeholder="Confirm Password"
-                    onChangeText={(text) => setConfirmPassword(text)}
-                    value={confirmPassword}
-                    underlineColorAndroid="transparent"
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                />
+                {emailError.length > 0 && (
+                    <Text style={styles.formError}>{emailError}</Text>
+                )}
+                <View style={[styles.inputContainer, styles.input]}>
+                    <TextInput
+                        style={styles.inputField}
+                        placeholderTextColor="#aaaaaa"
+                        secureTextEntry={passwordVisibility}
+                        placeholder="Password"
+                        onChangeText={(text) => setPassword(text)}
+                        value={password}
+                        underlineColorAndroid="transparent"
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                    />
+                    <Pressable onPress={handlePasswordVisibility}>
+                        <MaterialCommunityIcons
+                            name={rightIcon}
+                            size={22}
+                            color="#232323"
+                        />
+                    </Pressable>
+                </View>
+                {passwordError.length > 0 && (
+                    <Text style={styles.formError}>{passwordError}</Text>
+                )}
+                <View style={[styles.inputContainer, styles.input]}>
+                    <TextInput
+                        style={styles.inputField}
+                        placeholderTextColor="#aaaaaa"
+                        secureTextEntry={passwordVisibility}
+                        placeholder="Confirm Password"
+                        onChangeText={(text) => setConfirmPassword(text)}
+                        value={confirmPassword}
+                        underlineColorAndroid="transparent"
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                    />
+                    <Pressable onPress={handlePasswordVisibility}>
+                        <MaterialCommunityIcons
+                            name={rightIcon}
+                            size={22}
+                            color="#232323"
+                        />
+                    </Pressable>
+                </View>
                 {confirmPasswordError.length > 0 && (
-                    <Text>{confirmPasswordError}</Text>
+                    <Text style={styles.formError}>{confirmPasswordError}</Text>
                 )}
                 <TouchableOpacity
                     style={styles.button}
@@ -174,7 +217,6 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: "center",
     },
-    title: {},
     logo: {
         flex: 1,
         height: 120,
@@ -193,6 +235,14 @@ const styles = StyleSheet.create({
         marginRight: 30,
         paddingLeft: 16,
     },
+    inputContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+    },
+    inputField: {
+        width: "90%",
+        backgroundColor: "white",
+    },
     button: {
         backgroundColor: "#788eec",
         marginLeft: 30,
@@ -207,6 +257,11 @@ const styles = StyleSheet.create({
         color: "white",
         fontSize: 16,
         fontWeight: "bold",
+    },
+    formError: {
+        color: "red",
+        marginLeft: 30,
+        marginRight: 30,
     },
     footerView: {
         flex: 1,

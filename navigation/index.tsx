@@ -8,7 +8,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
-import { ColorSchemeName, Pressable} from 'react-native';
+import { ColorSchemeName, Pressable, Image, TouchableOpacity, Button, View, Text, } from 'react-native';
 
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
@@ -18,15 +18,20 @@ import ModalScreen from '../screens/defaults/ModalScreen';
 import NotFoundScreen from "../screens/defaults/NotFoundScreen";
 // import TabOneScreen from '../screens/defaults/TabOneScreen';
 // import TabTwoScreen from '../screens/defaults/TabTwoScreen';
-import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
+import { RootStackParamList, RootTabParamList, RootTabScreenProps, DrawerParamList } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 
 import auth from "@react-native-firebase/auth";
 
 import LoginScreen from '../screens/LoginScreen';
+import PhoneCodeConfirmationScreen from "../screens/PhoneConfirm";
 import RegistrationScreen from '../screens/RegistrationScreen';
+
 import HomeScreen from "../screens/HomeScreen";
-import PhoneCodeConfirmationScreen from '../screens/PhoneConfirm';
+import EventsPage from "../screens/pages/Events";
+import ReservationsPage from '../screens/pages/Reservations';
+import PhotosPage from '../screens/pages/Photos';
+import ProfilePage from '../screens/pages/Profile';
 
 // import { decode, encode } from "base-64";
 // if (!global.btoa) {
@@ -51,6 +56,39 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
  * https://reactnavigation.org/docs/modal
  */
 const Stack = createNativeStackNavigator<RootStackParamList>();
+const Drawer = createDrawerNavigator<DrawerParamList>();
+
+function Home() {
+    return (
+        <Drawer.Navigator>
+            <Drawer.Screen
+                name="Home"
+                options={{ drawerLabel: "Home" }}
+                component={firstScreenStack}
+            />
+            <Drawer.Screen
+                name="Events"
+                options={{ drawerLabel: "Events" }}
+                component={secondScreenStack}
+            />
+            <Drawer.Screen
+                name="Reservations"
+                options={{ drawerLabel: "Reservations" }}
+                component={thirdScreenStack}
+            />
+            <Drawer.Screen
+                name="Photos"
+                options={{ drawerLabel: "Photos" }}
+                component={fourthScreenStack}
+            />
+            <Drawer.Screen
+                name="Profile"
+                options={{ drawerLabel: "Profile" }}
+                component={fifthScreenStack}
+            />
+        </Drawer.Navigator>
+    );
+}
 
 function RootNavigator() {
     // Set an initializing state whilst Firebase connects
@@ -71,13 +109,10 @@ function RootNavigator() {
     if (initializing) return null;
 
     return (
-        // <Stack.Navigator>
-        //     <Stack.Screen name="Login" component={LoginScreen} />
-        // </Stack.Navigator>
         <Stack.Navigator>
             {user ? (
-                <Stack.Screen name="Home">
-                    {(props) => <HomeScreen {...props} extraData={user} />}
+                <Stack.Screen name="Home"
+                component={Home}>
                 </Stack.Screen>
             ) : (
                 <>
@@ -95,6 +130,101 @@ function RootNavigator() {
         </Stack.Navigator>
     );
 }
+const NavigationDrawerStructure = (props) => {
+    //Structure for the navigatin Drawer
+    const toggleDrawer = () => {
+        //Props to open/close the drawer
+        props.navigationProps.toggleDrawer();
+    };
+
+    return (
+        <View style={{ flexDirection: "row" }}>
+            <TouchableOpacity onPress={() => toggleDrawer()}>
+                {/*Donute Button Image */}
+                <Image
+                    source={{
+                        uri: "https://raw.githubusercontent.com/AboutReact/sampleresource/master/drawerWhite.png",
+                    }}
+                    style={{
+                        width: 25,
+                        height: 25,
+                        marginLeft: 5,
+                    }}
+                />
+            </TouchableOpacity>
+        </View>
+    );
+};
+
+function firstScreenStack({ navigation }) {
+    return (
+        <Stack.Navigator initialRouteName="Home"
+            screenOptions={{
+                headerShown: false
+            }}>
+            <Stack.Screen
+                name="Home"
+                component={HomeScreen}>
+            </Stack.Screen>
+        </Stack.Navigator>
+    );
+}
+
+function secondScreenStack ({ navigation }) {
+    return (
+        <Stack.Navigator
+            initialRouteName="Events"
+            screenOptions={{
+                headerShown: false,
+            }}
+        >
+            <Stack.Screen name="Events" component={EventsPage}></Stack.Screen>
+        </Stack.Navigator>
+    );
+}
+
+function thirdScreenStack ({ navigation }) {
+    return (
+        <Stack.Navigator
+            initialRouteName="Reservations"
+            screenOptions={{
+                headerShown: false,
+            }}
+        >
+            <Stack.Screen
+                name="Reservations"
+                component={ReservationsPage}
+            ></Stack.Screen>
+        </Stack.Navigator>
+    );
+}
+
+function fourthScreenStack({ navigation }) {
+    return (
+        <Stack.Navigator
+            initialRouteName="Photos"
+            screenOptions={{
+                headerShown: false,
+            }}
+        >
+            <Stack.Screen name="Photos" component={PhotosPage}></Stack.Screen>
+        </Stack.Navigator>
+    );
+}
+
+function fifthScreenStack({ navigation }) {
+    return (
+        <Stack.Navigator
+            initialRouteName="Profile"
+            screenOptions={{
+                headerShown: false,
+            }}
+        >
+            <Stack.Screen name="Profile" component={ProfilePage}></Stack.Screen>
+        </Stack.Navigator>
+    );
+}
+
 {
     /* { <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
