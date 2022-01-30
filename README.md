@@ -2,7 +2,7 @@
 
 [Market Research Report](https://docs.google.com/document/d/1xZdxptCEs5-hoUvDSlnbW_CbBmywLKR8Z1Ls86qBWK0/edit?usp=sharing) (written prior to development)
 
-<img width="300px" src="https://user-images.githubusercontent.com/53918934/151661064-920a1222-1c1b-4c73-922d-5786fa92f556.png"/><img width="300px" src="https://user-images.githubusercontent.com/53918934/151682766-b3f6cb8d-dfb4-4fef-9b92-244d485cecb9.png"><img width="300px" src="https://user-images.githubusercontent.com/53918934/151681713-9f0faab8-ac2b-47aa-8f6e-5f6920bc5616.png"><img width="300px" src="https://user-images.githubusercontent.com/53918934/151661591-1bb31364-a8e4-4f85-9811-832dbbdd124c.png"/><img width="300px" src="https://user-images.githubusercontent.com/53918934/151661692-caa418fe-4184-4b4b-9ebe-47c4f512fc58.png"/><img width="300px" src="https://user-images.githubusercontent.com/53918934/151661051-b03bfc31-ef38-4b52-876a-8d90e9defddd.png"/>
+<img width="300px" src="https://user-images.githubusercontent.com/53918934/151661064-920a1222-1c1b-4c73-922d-5786fa92f556.png"/><img width="300px" src="https://user-images.githubusercontent.com/53918934/151682766-b3f6cb8d-dfb4-4fef-9b92-244d485cecb9.png"><img width="300px" src="https://user-images.githubusercontent.com/53918934/151681713-9f0faab8-ac2b-47aa-8f6e-5f6920bc5616.png"><img width="300px" src="https://user-images.githubusercontent.com/53918934/151661591-1bb31364-a8e4-4f85-9811-832dbbdd124c.png"/><img width="300px" src="https://user-images.githubusercontent.com/53918934/151682819-b03d5b45-9fc8-41cc-b7af-becb20952700.png"/><img width="300px" src="https://user-images.githubusercontent.com/53918934/151661051-b03bfc31-ef38-4b52-876a-8d90e9defddd.png"/>
 
 # For whoever's taking over this project:
 
